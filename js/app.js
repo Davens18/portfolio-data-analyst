@@ -28,19 +28,36 @@ function renderChart() {
 
 // Función Fetch (Concepto de Promesa)
 async function obtenerDatos() {
-    console.log("Iniciando petición de datos...");
+    const contenedor = document.getElementById('spotify-content');
+    
     try {
-        // En la Fase 4 aquí irá el fetch real con el Token
-        // Por ahora, simulamos la espera de la "Promesa"
-        setTimeout(() => {
-            document.getElementById('spotify-content').innerHTML = `
-                <p><strong>Última joya analizada:</strong> Idilio - Willie Colón</p>
-                <p>Género: Salsa | Tempo: 125 BPM</p>
-            `;
-            renderChart();
-        }, 1500);
+        // Simulamos la llamada a la API
+        const respuesta = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+            headers: { 'Authorization': 'Bearer ' + 'TU_TOKEN_TEMPORAL' }
+        });
+
+        // Manejo de errores basado en el Status Code
+        if (respuesta.status === 401) {
+            throw new Error("Token expirado o no autorizado");
+        } else if (respuesta.status === 204) {
+            contenedor.innerHTML = "<p>Actualmente no estoy escuchando música. 😴</p>";
+            renderChart(); // Mostramos el gráfico con datos históricos
+            return;
+        }
+
+        const datos = await respuesta.json();
+        // ... procesar datos reales aquí
+        
     } catch (error) {
-        console.error("Error al obtener datos:", error);
+        console.error("Error detectado:", error);
+        // Feedback visual para el usuario (Mejor práctica)
+        contenedor.innerHTML = `
+            <div class="error-msg">
+                <p>⚠️ Nota: El dashboard está en modo demostración.</p>
+                <p>Para ver mis datos reales, se requiere autenticación privada.</p>
+            </div>
+        `;
+        renderChart(); 
     }
 }
 
