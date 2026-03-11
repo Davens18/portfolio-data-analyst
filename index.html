@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Torres | Data Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">DT | Data Analyst</div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Análisis de Datos & Software</h1>
+            <p>Transformando información en decisiones estratégicas.</p>
+        </section>
+
+        <section id="dashboard" class="dashboard-grid">
+            <div class="card" id="spotify-card">
+                <h3>Escuchando ahora (Spotify)</h3>
+                <div id="spotify-content">
+                    <p>Cargando datos de la API...</p>
+                </div>
+            </div>
+            
+            <div class="card" id="chart-card">
+                <h3>Análisis de Energía Musical</h3>
+                <canvas id="myChart"></canvas> </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
