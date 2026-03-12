@@ -40,3 +40,21 @@ body {
 
 h1 { font-size: 3rem; color: var(--primary-color); }
 h3 { margin-top: 0; color: #94a3b8; }
+
+.loading {
+    color: var(--primary-color);
+    font-style: italic;
+    animation: blink 1s infinite;
+}
+
+.api-data {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 1rem;
+    margin-top: 1rem;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}

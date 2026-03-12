@@ -30,34 +30,40 @@ function renderChart() {
 async function obtenerDatos() {
     const contenedor = document.getElementById('spotify-content');
     
-    try {
-        // Simulamos la llamada a la API
-        const respuesta = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-            headers: { 'Authorization': 'Bearer ' + 'TU_TOKEN_TEMPORAL' }
-        });
+    // 1. Estado de Carga (User Experience)
+    contenedor.innerHTML = "<p class='loading'>Buscando datos en la API...</p>";
 
-        // Manejo de errores basado en el Status Code
-        if (respuesta.status === 401) {
-            throw new Error("Token expirado o no autorizado");
-        } else if (respuesta.status === 204) {
-            contenedor.innerHTML = "<p>Actualmente no estoy escuchando música. 😴</p>";
-            renderChart(); // Mostramos el gráfico con datos históricos
-            return;
+    try {
+        // Simulamos una demora de red (Promesa)
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // En un entorno real con servidor, aquí iría el fetch.
+        // Como es un sitio estático, manejamos un "Fallback" (Plan B)
+        const modoDemo = true; 
+
+        if (modoDemo) {
+            // Datos de ejemplo que demuestran tu gusto musical y capacidad de análisis
+            const datosSimulados = {
+                cancion: "Idilio",
+                artista: "Willie Colón",
+                bpm: 125,
+                analisis: "Alta Bailabilidad"
+            };
+
+            contenedor.innerHTML = `
+                <div class="api-data">
+                    <p><strong>Actualizado:</strong> Modo Demostración 🛡️</p>
+                    <p><strong>Artista:</strong> ${datosSimulados.artista}</p>
+                    <p><strong>Análisis de Datos:</strong> ${datosSimulados.analisis}</p>
+                </div>
+            `;
+            
+            // Renderizamos el gráfico con los datos que procesamos
+            renderChart();
         }
 
-        const datos = await respuesta.json();
-        // ... procesar datos reales aquí
-        
     } catch (error) {
-        console.error("Error detectado:", error);
-        // Feedback visual para el usuario (Mejor práctica)
-        contenedor.innerHTML = `
-            <div class="error-msg">
-                <p>⚠️ Nota: El dashboard está en modo demostración.</p>
-                <p>Para ver mis datos reales, se requiere autenticación privada.</p>
-            </div>
-        `;
-        renderChart(); 
+        contenedor.innerHTML = "<p>Error al conectar con el servidor de datos.</p>";
     }
 }
 
